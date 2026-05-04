@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Para Andressa 💛</title>
+
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display&family=Lato:wght@300;400&display=swap"
+        rel="stylesheet">
+
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            font-family: 'Lato', sans-serif;
+            color: #eee;
+            height: 100vh;
+            overflow: hidden;
+            background: #0a0a0a;
+        }
+
+        .bg {
+            position: fixed;
+            inset: 0;
+            background:
+                radial-gradient(circle at 20% 50%, rgba(180, 120, 40, 0.15), transparent),
+                linear-gradient(135deg, #0d0a06, #0a0a0a);
+        }
+
+        .envelope {
+            position: absolute;
+            inset: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: 0.8s;
+        }
+
+        .envelope.fechado {
+            opacity: 0;
+            transform: translateY(-20px);
+        }
+
+        .envelope h1 {
+            color: #f5d06f;
+        }
+
+        .carta {
+            position: absolute;
+            inset: 0;
+            opacity: 0;
+            transform: translateY(30px);
+            transition: 1.2s;
+            padding: 40px;
+            overflow: auto;
+        }
+
+        .carta.ativa {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .music-btn {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            opacity: 0;
+        }
+
+        .music-btn.visivel {
+            opacity: 1;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="bg"></div>
+
+    <div class="envelope" id="envelope" onclick="abrirCarta()">
+        <h1>💌 Para Andressa</h1>
+        <p>toque para abrir</p>
+    </div>
+
+    <div class="carta" id="carta">
+
+        <h2>Minha filha, Andressa…</h2>
+
+        <p>Se eu pudesse escolher, essa conversa seria olhando nos seus olhos…</p>
+
+        <p><b>Eu estou em paz.</b></p>
+
+        <p><b>Eu sei que você vai ficar bem.</b></p>
+
+        <p>E nunca esqueça:</p>
+
+        <p><b>Você não ficou sem mãe.</b></p>
+
+        <p><b>Com amor, sempre…</b><br>Mamãe 💛</p>
+
+    </div>
+
+    <button class="music-btn" id="musicBtn" onclick="tocar()">🎵 música</button>
+
+    <audio id="musica" loop>
+        <source src="./musica.mpeg" type="audio/mpeg">
+    </audio>
+
+    <script>
+        function abrirCarta() {
+            const envelope = document.getElementById('envelope');
+            const carta = document.getElementById('carta');
+            const btn = document.getElementById('musicBtn');
+            const audio = document.getElementById('musica');
+
+            envelope.classList.add('fechado');
+
+            // iniciar música com fade
+            audio.volume = 0;
+            audio.play();
+
+            let volume = 0;
+            const fade = setInterval(() => {
+                if (volume < 1) {
+                    volume += 0.05;
+                    audio.volume = volume;
+                } else {
+                    clearInterval(fade);
+                }
+            }, 30);
+
+            btn.textContent = '⏸ música';
+
+            setTimeout(() => {
+                carta.classList.add('ativa');
+                btn.classList.add('visivel');
+            }, 600);
+        }
+
+        function tocar() {
+            const audio = document.getElementById('musica');
+            const btn = document.getElementById('musicBtn');
+
+            if (audio.paused) {
+                // iniciar música com fade
+                audio.volume = 0;
+                audio.play();
+
+                let volume = 0;
+                const fade = setInterval(() => {
+                    if (volume < 1) {
+                        volume += 0.05;
+                        audio.volume = volume;
+                    } else {
+                        clearInterval(fade);
+                    }
+                }, 30);
+
+                btn.textContent = '⏸ música';
+            } else {
+                audio.pause();
+                btn.textContent = '🎵 música';
+            }
+        }
+    </script>
+
+</body>
+
+</html>
