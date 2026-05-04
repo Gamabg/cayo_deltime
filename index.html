@@ -18,8 +18,8 @@
             margin: 0;
             font-family: 'Lato', sans-serif;
             color: #eee;
-            height: 100vh;
-            overflow: hidden;
+            min-height: 100vh;
+            overflow-x: hidden;
             background: #0a0a0a;
         }
 
@@ -52,6 +52,7 @@
         .envelope.fechado {
             opacity: 0;
             transform: translateY(-20px);
+            pointer-events: none;
         }
 
         .envelope h1 {
@@ -69,6 +70,12 @@
 
             z-index: 1;
             /* 🔥 correção */
+        }
+
+        .container {
+            width: min(100%, 760px);
+            margin: 0 auto;
+            padding: 0 8px;
         }
 
         .carta.ativa {
@@ -91,6 +98,32 @@
 
         .music-btn.visivel {
             opacity: 1;
+        }
+
+        @media (max-width: 768px) {
+            .carta {
+                padding: 28px;
+            }
+
+            .music-btn {
+                top: 16px;
+                right: 16px;
+                padding: 10px 14px;
+            }
+        }
+
+        @media (max-width: 520px) {
+            .envelope h1 {
+                font-size: 1.5rem;
+            }
+
+            .carta {
+                padding: 22px;
+            }
+
+            .container {
+                padding: 0 4px;
+            }
         }
     </style>
 </head>
@@ -174,8 +207,6 @@
             </div>
 
         </div>
-
-        <button class="music-btn" id="musicBtn" onclick="tocar()">🎵 música</button>
 
         <audio id="musica" loop>
             <source src="./musica.mpeg" type="audio/mpeg">
