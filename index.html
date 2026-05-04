@@ -355,6 +355,9 @@ function abrirCarta() {
   setTimeout(() => {
     document.getElementById('carta').classList.add('ativa');
     document.getElementById('musicBtn').classList.add('visivel');
+    const audio = document.getElementById('musica');
+    audio.play();
+    document.getElementById('musicBtn').textContent = '⏸ música';
   }, 600);
 }
 
