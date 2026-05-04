@@ -40,6 +40,13 @@
             justify-content: center;
             cursor: pointer;
             transition: 0.8s;
+
+            background: none;
+            border: none;
+            color: inherit;
+
+            z-index: 2;
+            /* 🔥 correção */
         }
 
         .envelope.fechado {
@@ -59,6 +66,9 @@
             transition: 1.2s;
             padding: 40px;
             overflow: auto;
+
+            z-index: 1;
+            /* 🔥 correção */
         }
 
         .carta.ativa {
@@ -71,6 +81,12 @@
             top: 20px;
             right: 20px;
             opacity: 0;
+            background: #222;
+            color: #fff;
+            border: none;
+            padding: 10px 15px;
+            border-radius: 8px;
+            cursor: pointer;
         }
 
         .music-btn.visivel {
@@ -83,74 +99,102 @@
 
     <div class="bg"></div>
 
-    <div class="envelope" id="envelope" onclick="abrirCarta()">
+    <button class="envelope" id="envelope" onclick="abrirCarta()">
         <h1>💌 Para Andressa</h1>
-        <p>toque para abrir</p>
-    </div>
+        <p>Toque para abrir</p>
+    </button>
 
     <div class="carta" id="carta">
 
-        <h2>Minha filha, Andressa…</h2>
+        <button class="music-btn" id="musicBtn" onclick="tocar()">🎵 música</button>
 
-        <p>Se eu pudesse escolher, essa conversa seria olhando nos seus olhos…</p>
+        <div class="container">
 
-        <p><b>Eu estou em paz.</b></p>
+            <h2>Minha filha, Andressa…</h2>
+            <div class="linha-ouro"></div>
 
-        <p><b>Eu sei que você vai ficar bem.</b></p>
+            <p>Se eu pudesse escolher, essa conversa seria olhando nos seus olhos…<br>
+                com um café entre nós e o tempo passando devagar, como a gente gostava.</p>
 
-        <p>E nunca esqueça:</p>
+            <p>Mas eu ainda encontro um jeito de falar com você.<br>
+                Do jeito que sempre fiz: com calma… e com amor.</p>
 
-        <p><b>Você não ficou sem mãe.</b></p>
+            <p><b>Eu estou em paz.</b><br>
+                E isso é importante que você saiba.</p>
 
-        <p><b>Com amor, sempre…</b><br>Mamãe 💛</p>
+            <p>Mas mais importante ainda é isso:<br>
+                <b>eu sei que você vai ficar bem.</b>
+            </p>
 
-    </div>
+            <p>Não porque a vida ficou fácil…<br>
+                mas porque você aprendeu a atravessar o que é difícil.</p>
 
-    <button class="music-btn" id="musicBtn" onclick="tocar()">🎵 música</button>
+            <p>Eu vi você crescer, Andressa.<br>
+                Vi suas escolhas, seus recomeços…<br>
+                e a mulher que você se tornou.</p>
 
-    <audio id="musica" loop>
-        <source src="./musica.mpeg" type="audio/mpeg">
-    </audio>
+            <p>(E sim… ainda reconheço aquela teimosia 😌)</p>
 
-    <script>
-        function abrirCarta() {
-            const envelope = document.getElementById('envelope');
-            const carta = document.getElementById('carta');
-            const btn = document.getElementById('musicBtn');
-            const audio = document.getElementById('musica');
+            <p><b>Você não precisa dar conta de tudo.</b></p>
 
-            envelope.classList.add('fechado');
+            <p>Pode parar um pouco. Pode respirar.<br>
+                Pode não ter todas as respostas.</p>
 
-            // iniciar música com fade
-            audio.volume = 0;
-            audio.play();
+            <p>E, minha filha… tenta não levar tudo tão a sério.<br>
+                Nem eu levava — eu só disfarçava melhor 😂</p>
 
-            let volume = 0;
-            const fade = setInterval(() => {
-                if (volume < 1) {
-                    volume += 0.05;
-                    audio.volume = volume;
-                } else {
-                    clearInterval(fade);
-                }
-            }, 30);
+            <p>Sobre nós…<br>
+                nós fizemos o melhor que sabíamos.</p>
 
-            btn.textContent = '⏸ música';
+            <p>E foi suficiente.<br>
+                Sempre foi.</p>
 
-            setTimeout(() => {
-                carta.classList.add('ativa');
-                btn.classList.add('visivel');
-            }, 600);
-        }
+            <p>Eu tenho um orgulho imenso de você —<br>
+                pelo coração que você carrega.</p>
 
-        function tocar() {
-            const audio = document.getElementById('musica');
-            const btn = document.getElementById('musicBtn');
+            <p>Continue sendo forte…<br>
+                mas também seja leve.</p>
 
-            if (audio.paused) {
-                // iniciar música com fade
+            <p><b>E se cuida, viu?</b> 😄</p>
+
+            <p>Quando a saudade vier, não afasta ela.<br>
+                Ela só existe porque o amor continua.</p>
+
+            <p>E eu também continuo…<br>
+                de um jeito que o tempo não apaga.</p>
+
+            <p>E nunca esqueça:</p>
+
+            <p><b>Você não ficou sem mãe.</b><br>
+                Você carrega tudo o que eu fui… dentro de você.</p>
+
+            <div class="assinatura">
+                <p><b>Com amor, sempre…</b></p>
+                <p><b>Mamãe 💛</b></p>
+            </div>
+
+        </div>
+
+        <button class="music-btn" id="musicBtn" onclick="tocar()">🎵 música</button>
+
+        <audio id="musica" loop>
+            <source src="./musica.mpeg" type="audio/mpeg">
+        </audio>
+
+        <script>
+            function abrirCarta() {
+                const envelope = document.getElementById('envelope');
+
+                if (envelope.classList.contains('fechado')) return;
+
+                const carta = document.getElementById('carta');
+                const btn = document.getElementById('musicBtn');
+                const audio = document.getElementById('musica');
+
+                envelope.classList.add('fechado');
+
                 audio.volume = 0;
-                audio.play();
+                audio.play().catch(() => { }); // 🔥 correção
 
                 let volume = 0;
                 const fade = setInterval(() => {
@@ -163,12 +207,38 @@
                 }, 30);
 
                 btn.textContent = '⏸ música';
-            } else {
-                audio.pause();
-                btn.textContent = '🎵 música';
+
+                setTimeout(() => {
+                    carta.classList.add('ativa');
+                    btn.classList.add('visivel');
+                }, 600);
             }
-        }
-    </script>
+
+            function tocar() {
+                const audio = document.getElementById('musica');
+                const btn = document.getElementById('musicBtn');
+
+                if (audio.paused) {
+                    audio.volume = 0;
+                    audio.play().catch(() => { }); // 🔥 correção
+
+                    let volume = 0;
+                    const fade = setInterval(() => {
+                        if (volume < 1) {
+                            volume += 0.05;
+                            audio.volume = volume;
+                        } else {
+                            clearInterval(fade);
+                        }
+                    }, 30);
+
+                    btn.textContent = '⏸ música';
+                } else {
+                    audio.pause();
+                    btn.textContent = '🎵 música';
+                }
+            }
+        </script>
 
 </body>
 
