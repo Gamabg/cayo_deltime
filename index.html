@@ -1,276 +1,374 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
-
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Para Andressa 💛</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Para Andressa 💛</title>
 
-    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display&family=Lato:wght@300;400&display=swap"
-        rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;1,400&family=Lato:wght@300;400&display=swap" rel="stylesheet">
 
-    <style>
-        * {
-            box-sizing: border-box;
-        }
+<style>
 
-        body {
-            margin: 0;
-            font-family: 'Lato', sans-serif;
-            color: #eee;
-            min-height: 100vh;
-            overflow-x: hidden;
-            background: #0a0a0a;
-        }
+* { box-sizing: border-box; }
 
-        .bg {
-            position: fixed;
-            inset: 0;
-            background:
-                radial-gradient(circle at 20% 50%, rgba(180, 120, 40, 0.15), transparent),
-                linear-gradient(135deg, #0d0a06, #0a0a0a);
-        }
+body {
+  margin: 0;
+  font-family: 'Lato', sans-serif;
+  font-weight: 300;
+  color: #eee;
+  height: 100vh;
+  overflow: hidden;
+  background: #0a0a0a;
+}
 
-        .envelope {
-            position: absolute;
-            inset: 0;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            cursor: pointer;
-            transition: 0.8s;
+/* FUNDO COM GRADIENTE ANIMADO */
+.bg {
+  position: fixed;
+  inset: 0;
+  background:
+    radial-gradient(ellipse at 20% 50%, rgba(180, 120, 40, 0.15) 0%, transparent 60%),
+    radial-gradient(ellipse at 80% 20%, rgba(100, 60, 20, 0.12) 0%, transparent 50%),
+    linear-gradient(135deg, #0d0a06 0%, #120e08 50%, #0a0a0a 100%);
+  animation: bgPulse 8s ease-in-out infinite alternate;
+}
 
-            background: none;
-            border: none;
-            color: inherit;
+@keyframes bgPulse {
+  0% { opacity: 0.9; }
+  100% { opacity: 1; }
+}
 
-            z-index: 2;
-            /* 🔥 correção */
-        }
+/* PARTÍCULAS DE POEIRA DOURADA */
+.particles {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  overflow: hidden;
+}
 
-        .envelope.fechado {
-            opacity: 0;
-            transform: translateY(-20px);
-            pointer-events: none;
-        }
+.particle {
+  position: absolute;
+  width: 2px;
+  height: 2px;
+  background: #f5d06f;
+  border-radius: 50%;
+  opacity: 0;
+  animation: float linear infinite;
+}
 
-        .envelope h1 {
-            color: #f5d06f;
-        }
+@keyframes float {
+  0% { transform: translateY(100vh) translateX(0); opacity: 0; }
+  10% { opacity: 0.6; }
+  90% { opacity: 0.3; }
+  100% { transform: translateY(-10vh) translateX(30px); opacity: 0; }
+}
 
-        .carta {
-            position: absolute;
-            inset: 0;
-            opacity: 0;
-            transform: translateY(30px);
-            transition: 1.2s;
-            padding: 40px;
-            overflow: auto;
+/* TELA INICIAL */
+.envelope {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  animation: fadeIn 2.5s ease;
+  z-index: 10;
+  transition: opacity 0.8s ease, transform 0.8s ease;
+}
 
-            z-index: 1;
-            /* 🔥 correção */
-        }
+.envelope.fechado {
+  opacity: 0;
+  transform: translateY(-20px);
+  pointer-events: none;
+}
 
-        .container {
-            width: min(100%, 760px);
-            margin: 0 auto;
-            padding: 0 8px;
-        }
+.envelope-icon {
+  font-size: 60px;
+  margin-bottom: 20px;
+  animation: pulsar 2.5s ease-in-out infinite;
+  filter: drop-shadow(0 0 20px rgba(245, 208, 111, 0.4));
+}
 
-        .carta.ativa {
-            opacity: 1;
-            transform: translateY(0);
-        }
+@keyframes pulsar {
+  0%, 100% { transform: scale(1); filter: drop-shadow(0 0 20px rgba(245, 208, 111, 0.4)); }
+  50% { transform: scale(1.06); filter: drop-shadow(0 0 35px rgba(245, 208, 111, 0.7)); }
+}
 
-        .music-btn {
-            position: fixed;
-            top: 20px;
-            right: 20px;
-            opacity: 0;
-            background: #222;
-            color: #fff;
-            border: none;
-            padding: 10px 15px;
-            border-radius: 8px;
-            cursor: pointer;
-        }
+.envelope h1 {
+  font-family: 'Playfair Display', serif;
+  font-size: 38px;
+  font-weight: 400;
+  color: #f5d06f;
+  margin: 0 0 12px;
+  letter-spacing: 1px;
+  text-shadow: 0 0 40px rgba(245, 208, 111, 0.3);
+}
 
-        .music-btn.visivel {
-            opacity: 1;
-        }
+.envelope .hint {
+  font-size: 13px;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  opacity: 0.45;
+  color: #d4b878;
+}
 
-        @media (max-width: 768px) {
-            .carta {
-                padding: 28px;
-            }
+.envelope .hint::before,
+.envelope .hint::after {
+  content: '— ';
+}
 
-            .music-btn {
-                top: 16px;
-                right: 16px;
-                padding: 10px 14px;
-            }
-        }
+/* CARTA */
+.carta {
+  position: absolute;
+  inset: 0;
+  overflow-y: auto;
+  padding: 50px 20px 80px;
+  opacity: 0;
+  transform: translateY(30px);
+  transition: all 1.2s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  pointer-events: none;
+  z-index: 5;
+}
 
-        @media (max-width: 520px) {
-            .envelope h1 {
-                font-size: 1.5rem;
-            }
+.carta.ativa {
+  opacity: 1;
+  transform: translateY(0);
+  pointer-events: all;
+}
 
-            .carta {
-                padding: 22px;
-            }
+.carta::-webkit-scrollbar { width: 3px; }
+.carta::-webkit-scrollbar-track { background: transparent; }
+.carta::-webkit-scrollbar-thumb { background: rgba(245, 208, 111, 0.2); border-radius: 2px; }
 
-            .container {
-                padding: 0 4px;
-            }
-        }
-    </style>
+/* CONTEÚDO */
+.container {
+  max-width: 560px;
+  margin: auto;
+  line-height: 1.9;
+}
+
+.linha-ouro {
+  width: 40px;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, #f5d06f, transparent);
+  margin: 0 auto 30px;
+}
+
+h2 {
+  font-family: 'Playfair Display', serif;
+  font-size: 26px;
+  font-weight: 400;
+  color: #f5d06f;
+  text-align: center;
+  margin: 0 0 8px;
+  letter-spacing: 0.5px;
+  text-shadow: 0 0 30px rgba(245, 208, 111, 0.25);
+}
+
+p {
+  margin: 18px 0;
+  font-size: 15.5px;
+  color: #ddd;
+  font-weight: 300;
+}
+
+p b {
+  color: #f0c84a;
+  font-weight: 400;
+}
+
+.assinatura {
+  margin-top: 40px;
+  padding-top: 25px;
+  border-top: 1px solid rgba(245, 208, 111, 0.15);
+}
+
+/* BOTÃO MÚSICA */
+.music-btn {
+  position: fixed;
+  top: 22px;
+  right: 22px;
+  background: rgba(245, 208, 111, 0.08);
+  border: 1px solid rgba(245, 208, 111, 0.2);
+  padding: 9px 16px;
+  border-radius: 30px;
+  color: #f5d06f;
+  cursor: pointer;
+  font-size: 12px;
+  letter-spacing: 1px;
+  font-family: 'Lato', sans-serif;
+  transition: all 0.3s ease;
+  z-index: 20;
+  opacity: 0;
+}
+
+.music-btn.visivel {
+  opacity: 1;
+}
+
+.music-btn:hover {
+  background: rgba(245, 208, 111, 0.15);
+  border-color: rgba(245, 208, 111, 0.4);
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(15px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@media (max-width: 768px) {
+  .carta {
+    padding: 28px;
+  }
+
+  .music-btn {
+    top: 16px;
+    right: 16px;
+    padding: 10px 14px;
+  }
+}
+
+@media (max-width: 520px) {
+  .envelope h1 {
+    font-size: 1.5rem;
+  }
+
+  .carta {
+    padding: 22px;
+  }
+
+  .container {
+    padding: 0 4px;
+  }
+}
+
+</style>
 </head>
 
 <body>
 
-    <div class="bg"></div>
+<div class="bg"></div>
 
-    <button class="envelope" id="envelope" onclick="abrirCarta()">
-        <h1>💌 Para Andressa</h1>
-        <p>Toque para abrir</p>
-    </button>
+<!-- PARTÍCULAS -->
+<div class="particles" id="particles"></div>
 
-    <div class="carta" id="carta">
+<!-- TELA INICIAL -->
+<div class="envelope" id="envelope" onclick="abrirCarta()">
+  <div class="envelope-icon">💌</div>
+  <h1>Para Andressa</h1>
+  <p class="hint">toque para abrir</p>
+</div>
 
-        <button class="music-btn" id="musicBtn" onclick="tocar()">🎵 música</button>
+<!-- CARTA -->
+<div class="carta" id="carta">
 
-        <div class="container">
+  <button class="music-btn" id="musicBtn" onclick="tocar()">🎵 música</button>
 
-            <h2>Minha filha, Andressa…</h2>
-            <div class="linha-ouro"></div>
+  <div class="container">
 
-            <p>Se eu pudesse escolher, essa conversa seria olhando nos seus olhos…<br>
-                com um café entre nós e o tempo passando devagar, como a gente gostava.</p>
+    <h2>Minha filha, Andressa…</h2>
+    <div class="linha-ouro"></div>
 
-            <p>Mas eu ainda encontro um jeito de falar com você.<br>
-                Do jeito que sempre fiz: com calma… e com amor.</p>
+    <p>Se eu pudesse escolher, essa conversa seria olhando nos seus olhos…<br>
+    com um café entre nós e o tempo passando devagar, como a gente gostava.</p>
 
-            <p><b>Eu estou em paz.</b><br>
-                E isso é importante que você saiba.</p>
+    <p>Mas eu ainda encontro um jeito de falar com você.<br>
+    Do jeito que sempre fiz: com calma… e com amor.</p>
 
-            <p>Mas mais importante ainda é isso:<br>
-                <b>eu sei que você vai ficar bem.</b>
-            </p>
+    <p><b>Eu estou em paz.</b><br>
+    E isso é importante que você saiba.</p>
 
-            <p>Não porque a vida ficou fácil…<br>
-                mas porque você aprendeu a atravessar o que é difícil.</p>
+    <p>Mas mais importante ainda é isso:<br>
+    <b>eu sei que você vai ficar bem.</b></p>
 
-            <p>Eu vi você crescer, Andressa.<br>
-                Vi suas escolhas, seus recomeços…<br>
-                e a mulher que você se tornou.</p>
+    <p>Não porque a vida ficou fácil…<br>
+    mas porque você aprendeu a atravessar o que é difícil.</p>
 
-            <p>(E sim… ainda reconheço aquela teimosia 😌)</p>
+    <p>Eu vi você crescer, Andressa.<br>
+    Vi suas escolhas, seus recomeços…<br>
+    e a mulher que você se tornou.</p>
 
-            <p><b>Você não precisa dar conta de tudo.</b></p>
+    <p>(E sim… ainda reconheço aquela teimosia 😌)</p>
 
-            <p>Pode parar um pouco. Pode respirar.<br>
-                Pode não ter todas as respostas.</p>
+    <p><b>Você não precisa dar conta de tudo.</b></p>
 
-            <p>E, minha filha… tenta não levar tudo tão a sério.<br>
-                Nem eu levava — eu só disfarçava melhor 😂</p>
+    <p>Pode parar um pouco. Pode respirar.<br>
+    Pode não ter todas as respostas.</p>
 
-            <p>Sobre nós…<br>
-                nós fizemos o melhor que sabíamos.</p>
+    <p>E, minha filha… tenta não levar tudo tão a sério.<br>
+    Nem eu levava — eu só disfarçava melhor 😂</p>
 
-            <p>E foi suficiente.<br>
-                Sempre foi.</p>
+    <p>Sobre nós…<br>
+    nós fizemos o melhor que sabíamos.</p>
 
-            <p>Eu tenho um orgulho imenso de você —<br>
-                pelo coração que você carrega.</p>
+    <p>E foi suficiente.<br>
+    Sempre foi.</p>
 
-            <p>Continue sendo forte…<br>
-                mas também seja leve.</p>
+    <p>Eu tenho um orgulho imenso de você —<br>
+    pelo coração que você carrega.</p>
 
-            <p><b>E se cuida, viu?</b> 😄</p>
+    <p>Continue sendo forte…<br>
+    mas também seja leve.</p>
 
-            <p>Quando a saudade vier, não afasta ela.<br>
-                Ela só existe porque o amor continua.</p>
+    <p><b>E se cuida, viu?</b> 😄</p>
 
-            <p>E eu também continuo…<br>
-                de um jeito que o tempo não apaga.</p>
+    <p>Quando a saudade vier, não afasta ela.<br>
+    Ela só existe porque o amor continua.</p>
 
-            <p>E nunca esqueça:</p>
+    <p>E eu também continuo…<br>
+    de um jeito que o tempo não apaga.</p>
 
-            <p><b>Você não ficou sem mãe.</b><br>
-                Você carrega tudo o que eu fui… dentro de você.</p>
+    <p>E nunca esqueça:</p>
 
-            <div class="assinatura">
-                <p><b>Com amor, sempre…</b></p>
-                <p><b>Mamãe 💛</b></p>
-            </div>
+    <p><b>Você não ficou sem mãe.</b><br>
+    Você carrega tudo o que eu fui… dentro de você.</p>
 
-        </div>
+    <div class="assinatura">
+      <p><b>Com amor, sempre…</b></p>
+      <p><b>Mamãe 💛</b></p>
+    </div>
 
-        <audio id="musica" loop>
-            <source src="./musica.mpeg" type="audio/mpeg">
-        </audio>
+  </div>
+</div>
 
-        <script>
-            function abrirCarta() {
-                const envelope = document.getElementById('envelope');
+<!-- MÚSICA -->
+<audio id="musica" loop>
+  <source src="./musica.mpeg" type="audio/mpeg">
+</audio>
 
-                if (envelope.classList.contains('fechado')) return;
+<script>
+// Gerar partículas
+const container = document.getElementById('particles');
+for (let i = 0; i < 25; i++) {
+  const p = document.createElement('div');
+  p.className = 'particle';
+  p.style.left = Math.random() * 100 + '%';
+  p.style.animationDuration = (8 + Math.random() * 12) + 's';
+  p.style.animationDelay = (Math.random() * 15) + 's';
+  p.style.width = p.style.height = (1 + Math.random() * 2) + 'px';
+  p.style.opacity = Math.random() * 0.5;
+  container.appendChild(p);
+}
 
-                const carta = document.getElementById('carta');
-                const btn = document.getElementById('musicBtn');
-                const audio = document.getElementById('musica');
+function abrirCarta() {
+  document.getElementById('envelope').classList.add('fechado');
+  setTimeout(() => {
+    document.getElementById('carta').classList.add('ativa');
+    document.getElementById('musicBtn').classList.add('visivel');
+  }, 600);
+}
 
-                envelope.classList.add('fechado');
-
-                audio.volume = 0;
-                audio.play().catch(() => { }); // 🔥 correção
-
-                let volume = 0;
-                const fade = setInterval(() => {
-                    if (volume < 1) {
-                        volume += 0.05;
-                        audio.volume = volume;
-                    } else {
-                        clearInterval(fade);
-                    }
-                }, 30);
-
-                btn.textContent = '⏸ música';
-
-                setTimeout(() => {
-                    carta.classList.add('ativa');
-                    btn.classList.add('visivel');
-                }, 600);
-            }
-
-            function tocar() {
-                const audio = document.getElementById('musica');
-                const btn = document.getElementById('musicBtn');
-
-                if (audio.paused) {
-                    audio.volume = 0;
-                    audio.play().catch(() => { }); // 🔥 correção
-
-                    let volume = 0;
-                    const fade = setInterval(() => {
-                        if (volume < 1) {
-                            volume += 0.05;
-                            audio.volume = volume;
-                        } else {
-                            clearInterval(fade);
-                        }
-                    }, 30);
-
-                    btn.textContent = '⏸ música';
-                } else {
-                    audio.pause();
-                    btn.textContent = '🎵 música';
-                }
-            }
-        </script>
+function tocar() {
+  const audio = document.getElementById('musica');
+  if (audio.paused) {
+    audio.play();
+    document.getElementById('musicBtn').textContent = '⏸ música';
+  } else {
+    audio.pause();
+    document.getElementById('musicBtn').textContent = '🎵 música';
+  }
+}
+</script>
 
 </body>
-
 </html>
